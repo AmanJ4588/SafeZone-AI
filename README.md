@@ -14,7 +14,7 @@ An AI-powered project aimed at improving urban safety by mapping crime hotspots.
 
 ## ⚠️ Warning
 
-The dataset included in this repository is **fake data** and is not authentic. It has been created solely for the purpose of demonstrating the working of this project. The dataset should not be used as a source of real-world information or relied upon for decision-making.
+The dataset included in this repository is **synthetic data** and is not authentic. It has been created solely for the purpose of demonstrating the working of this project. The dataset should not be used as a source of real-world information or relied upon for decision-making.
 
 ---
 
