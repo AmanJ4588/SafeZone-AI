@@ -14,7 +14,7 @@ app = Flask(__name__)
 load_dotenv()
 
 
-cred = credentials.Certificate("safezone-ai-6019d-firebase-adminsdk-z0oi6-1775d444bd.json")
+cred = credentials.Certificate("/etc/secrets/safezone-ai-6019d-firebase-adminsdk-z0oi6-1775d444bd.json")
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
