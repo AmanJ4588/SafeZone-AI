@@ -169,17 +169,12 @@
 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
 <script>
-  const firebaseConfig = {
-    apiKey: "",
-    authDomain: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: "",
-    measurementId: "",
-  };
-
-  const app = firebase.initializeApp(firebaseConfig);
+  async function initFirebase() {
+    const res = await fetch("/firebase-config");
+    const firebaseConfig = await res.json();
+    const app = firebase.initializeApp(firebaseConfig);
+  }
+  initFirebase();
 
   const loginForm = document.getElementById("loginForm");
   loginForm.addEventListener("submit", (e) => {
