@@ -6,10 +6,15 @@ from firebase_admin import auth
 from firebase_admin import firestore
 from crime_cluster_model.upload_script import upload_to_firestore_with_id
 from crime_cluster_model.cluster_model import cluster_and_upload
+import json
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
+load_dotenv()
 
-cred = credentials.Certificate("path.json")
+
+cred = credentials.Certificate("safezone-ai-6019d-firebase-adminsdk-z0oi6-1775d444bd.json")
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
@@ -20,9 +25,9 @@ def verify_user(id_token):
         decoded_token = auth.verify_id_token(id_token)
         uid = decoded_token['uid']
         return uid
-    except auth.InvalidIdTokenError:
+    except Exception as e:  
+        print("Token verification failed:", e)
         return None
-
 
 # Custom Flask command to run the upload script
 @app.cli.command("upload_data")
@@ -142,6 +147,19 @@ def get_red_zone_data():
         return jsonify(red_zone_data)  # Send filtered red zone data to the frontend
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route("/firebase-config")
+def firebase_config():
+    return jsonify({
+        "apiKey": os.getenv("FIREBASE_API_KEY"),
+        "authDomain": os.getenv("FIREBASE_AUTH_DOMAIN"),
+        "projectId": os.getenv("FIREBASE_PROJECT_ID"),
+        "storageBucket": os.getenv("FIREBASE_STORAGE_BUCKET"),
+        "messagingSenderId": os.getenv("FIREBASE_MESSAGING_SENDER_ID"),
+        "appId": os.getenv("FIREBASE_APP_ID"),
+        "measurementId": os.getenv("FIREBASE_MEASUREMENT_ID"),
+    })
+
 
 if __name__ == '__main__':
     app.run(port = 5000 , debug=True)
